@@ -40,4 +40,11 @@ describe("metadata", () => {
     expect(refFor("invoice", "abc")).not.toBe(refFor("invoice", "abc", { domain: "acme" }));
     expect(refFor("invoice", "abc")).toMatch(/^0x[0-9a-f]{64}$/);
   });
+
+  it("keeps (kind, id) pairs unambiguous by forbidding a separator in kind and domain", () => {
+    expect(() => refFor("invoice/a", "b")).toThrow(/kind/);
+    expect(() => refFor("invoice", "b", { domain: "acme/x" })).toThrow(/domain/);
+    expect(() => refFor("", "b")).toThrow(/kind/);
+    expect(refFor("invoice", "a/b")).toMatch(/^0x[0-9a-f]{64}$/); // ids stay free-form
+  });
 });

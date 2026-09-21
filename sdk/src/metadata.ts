@@ -44,7 +44,13 @@ export function decodeMetadata(metadata: string): DecodedMetadata | null {
   };
 }
 
-/** A 32-byte reference for an invoice or a payroll line: keccak(`${domain}/${kind}/${id}`). Unguessable only if `id` is. */
+/**
+ * A 32-byte reference for an invoice or a payroll line: keccak(`${domain}/${kind}/${id}`). Unguessable only if `id` is.
+ * `domain` and `kind` may not contain "/", otherwise ("invoice/a", "b") and ("invoice", "a/b") would collide.
+ */
 export function refFor(kind: string, id: string, opts: { domain?: string } = {}): Hex {
-  return ("0x" + bytesToHex(keccak_256(new TextEncoder().encode(`${opts.domain ?? "noirpay"}/${kind}/${id}`)))) as Hex;
+  const domain = opts.domain ?? "noirpay";
+  if (!kind || kind.includes("/")) throw new Error('kind must be non-empty and must not contain "/"');
+  if (!domain || domain.includes("/")) throw new Error('domain must be non-empty and must not contain "/"');
+  return ("0x" + bytesToHex(keccak_256(new TextEncoder().encode(`${domain}/${kind}/${id}`)))) as Hex;
 }
