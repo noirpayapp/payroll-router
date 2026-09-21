@@ -1,0 +1,36 @@
+{
+  "name": "@noirpay/payroll-router",
+  "version": "0.1.0",
+  "description": "TypeScript client for NoirpayRouter: build stealth payments and payroll batches with gas stipends, encode/decode announcement metadata, tag invoices and payroll lines, and verify settlement from a transaction receipt.",
+  "license": "MIT",
+  "type": "module",
+  "repository": { "type": "git", "url": "git+https://github.com/noirpayapp/payroll-router.git", "directory": "sdk" },
+  "homepage": "https://docs.noirpay.app",
+  "keywords": ["erc-5564", "stealth-address", "payroll", "invoice", "viem", "noirpay", "robinhood-chain"],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" } },
+  "files": ["dist", "README.md"],
+  "sideEffects": false,
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "lint": "tsc --noEmit && prettier --check \"{src,test}/**/*.ts\"",
+    "format": "prettier --write \"{src,test}/**/*.ts\"",
+    "test": "vitest run",
+    "gen-abi": "node scripts/gen-abi.mjs"
+  },
+  "dependencies": {
+    "@noble/hashes": "1.8.0"
+  },
+  "peerDependencies": { "viem": "^2.0.0" },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "prettier": "^3.6.2",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.3",
+    "viem": "^2.56.5",
+    "vitest": "^3.2.4"
+  }
+}
