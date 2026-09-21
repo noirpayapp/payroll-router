@@ -1,0 +1,13 @@
+# forge
+cache/
+out/
+broadcast/**/dry-run/
+broadcast/*/31337/
+.env
+.env.*
+!.env.example
+# sdk
+sdk/node_modules
+sdk/dist
+*.tsbuildinfo
+.DS_Store
