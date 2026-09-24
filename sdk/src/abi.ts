@@ -212,3 +212,6 @@ export const NoirpayRouterAbi = [
     "inputs": []
   }
 ] as const;
+
+/** keccak256 of the router's runtime code with the CBOR metadata stripped (see verifyDeployment). */
+export const ROUTER_CODE_HASH = "0xa61a616f4c12c7b0288410ad9158822cda3416fc8935c07d61f662188ce5231c" as const;
