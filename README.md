@@ -83,6 +83,23 @@ summarizeRun(rows, employerWallet);                               // { lines, to
 | `encodeMetadata` / `decodeMetadata` / `refFor` | The announcement metadata layout and 32-byte references |
 | `buildPayment` / `buildPlainPayment` / `buildBatch` / `totalStipend` | `Payment` structs and the ETH value to send |
 | `parseAnnouncements` / `settlesInvoice` / `summarizeRun` | Receipt → rows → did it settle this invoice / what did this wallet pay |
+| `verifyDeployment(client, { address } \| { txHash })` / `ROUTER_CODE_HASH` | Is this a NoirpayRouter? Compares metadata-stripped runtime code |
+
+### Accept a router someone else deployed
+
+The router has no owner and holds no funds, so any deployment of this exact code is as good as any other. An app can let
+an operator deploy it from their own wallet and accept it after checking the code:
+
+```ts
+import { verifyDeployment } from "@noirpay/payroll-router";
+
+const check = await verifyDeployment(publicClient, { txHash }); // or { address }
+if (!check.ok) throw new Error(check.reason); // "not-found" | "not-a-deployment" | "no-code" | "wrong-code"
+// check.address, check.block → start indexing announcements there
+```
+
+The hash ignores the CBOR metadata at the end of the bytecode, so builds of the same source from different checkouts
+(different file paths, same solc 0.8.30 / optimizer 800 / cancun) all match.
 
 The SDK has no dependency on the stealth maths; pass it any `{ stealthAddress, ephemeralPub, viewTag }`
 (`@noirpay/stealth-handles` produces exactly that).
