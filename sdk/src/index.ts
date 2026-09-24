@@ -1,4 +1,5 @@
-export { NoirpayRouterAbi } from "./abi";
+export { NoirpayRouterAbi, ROUTER_CODE_HASH } from "./abi";
+export { routerCodeHash, stripMetadata, verifyDeployment, type DeploymentCheck } from "./deploy";
 export { TRANSFER_FROM_SELECTOR, decodeMetadata, encodeMetadata, refFor, type DecodedMetadata } from "./metadata";
 export {
   buildBatch,
